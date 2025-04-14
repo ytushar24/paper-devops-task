@@ -9,6 +9,8 @@
 !paper-social-aws/**
 !app/
 !app/**
+!.github
+!.github/**
 
 # Allow specific file types
 !*.tf
