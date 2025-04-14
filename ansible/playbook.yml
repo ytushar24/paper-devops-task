@@ -2,10 +2,17 @@
   hosts: web
   become: true
 
+  vars:
+    repo_url: https://github.com/ytushar24/paper-devops-task.git
+    app_dir: /home/ec2-user/paper-devops-task
+
   tasks:
-    - name: Install Docker
+    - name: Install required packages
       yum:
-        name: docker
+        name:
+          - docker
+          - git
+          - python3-pip
         state: present
 
     - name: Start and enable Docker service
@@ -20,12 +27,7 @@
         groups: docker
         append: yes
 
-    - name: Install pip3
-      yum:
-        name: python3-pip
-        state: present
-
-    - name: Install docker and requests Python modules
+    - name: Install required Python packages
       pip:
         name:
           - docker
@@ -33,11 +35,36 @@
           - urllib3==1.26.16
         executable: pip3
 
-    - name: Run Nginx container
+    - name: Remove old repo if it exists
+      file:
+        path: "{{ app_dir }}"
+        state: absent
+
+    - name: Clone latest code from GitHub
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: main
+        force: yes
+
+    - name: Build Docker image for Paper.Social
+      community.docker.docker_image:
+        name: paper-social
+        path: "{{ app_dir }}"
+        source: build
+
+    - name: Stop any existing container
       community.docker.docker_container:
-        name: nginx
-        image: nginx
+        name: paper-social
+        state: absent
+        force_kill: true
+
+    - name: Run Paper.Social container
+      community.docker.docker_container:
+        name: paper-social
+        image: paper-social
         state: started
+        restart_policy: always
         published_ports:
-          - 80:80
+          - "80:80"
 
