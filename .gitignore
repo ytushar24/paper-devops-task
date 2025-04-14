@@ -1,0 +1,24 @@
+# Ignore everything
+*
+
+# But not these:
+!*.tf
+!*.tfvars
+!*.yaml
+!*.yml
+!*.json
+!*.sh
+!*.md
+
+# Exclude Terraform's auto-generated files
+.terraform/
+*.tfstate
+*.tfstate.*
+*.log
+*.tfplan
+crash.log
+
+# Exclude hidden files/folders
+.*
+!.gitignore
+
