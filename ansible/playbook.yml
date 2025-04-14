@@ -49,9 +49,10 @@
 
     - name: Build Docker image for Paper.Social
       community.docker.docker_image:
-        name: paper-social
-        path: "/home/ec2-user/paper-devops-task/app"
+        name: paper-social               # <— This is the image name
         source: build
+        build: 
+          path: /home/ec2-user/paper-devops-task/app
 
     - name: Stop any existing container
       community.docker.docker_container:
