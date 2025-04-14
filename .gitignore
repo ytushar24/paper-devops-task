@@ -1,7 +1,14 @@
 # Ignore everything
 *
 
-# But not these:
+# Allow only specific folders and config files
+!.gitignore
+!ansible/
+!ansible/**
+!paper-social-aws/
+!paper-social-aws/**
+
+# Allow specific file types
 !*.tf
 !*.tfvars
 !*.yaml
@@ -10,15 +17,11 @@
 !*.sh
 !*.md
 
-# Exclude Terraform's auto-generated files
+# Still ignore Terraform system files
 .terraform/
 *.tfstate
 *.tfstate.*
-*.log
 *.tfplan
+*.log
 crash.log
-
-# Exclude hidden files/folders
-.*
-!.gitignore
 
