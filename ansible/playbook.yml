@@ -1,5 +1,5 @@
 - name: Configure EC2 Instance for Paper.Social
-  hosts: web
+  hosts: all
   become: true
 
   vars:
