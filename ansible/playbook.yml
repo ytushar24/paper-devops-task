@@ -33,7 +33,7 @@
           - docker
           - requests
           - urllib3==1.26.16
-        executable: /usr/local/bin/python3.8 -m pip
+        executable: /usr/local/bin/pip3.8
 
     - name: Remove old repo if it exists
       file:
