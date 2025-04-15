@@ -13,6 +13,7 @@
           - docker
           - git
           - python3-pip
+          - requests
         state: present
 
     - name: Start and enable Docker service
