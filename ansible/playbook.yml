@@ -1,6 +1,8 @@
 - name: Configure EC2 Instance for Paper.Social
   hosts: all
   become: true
+  vars:
+    ansible_python_interpreter: /usr/local/bin/python3.8
 
   vars:
     repo_url: https://github.com/ytushar24/paper-devops-task.git
