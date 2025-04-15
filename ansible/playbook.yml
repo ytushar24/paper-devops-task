@@ -53,6 +53,8 @@
         source: build
         build: 
           path: "{{ app_dir }}/app"
+        force_source: true
+        force_tag: true
 
     - name: Stop any existing container
       community.docker.docker_container:
