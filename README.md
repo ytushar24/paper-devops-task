@@ -1,12 +1,12 @@
-# Paper.Social - DevOps Engineer Assessment (AWS & IBM Cloud)
+# Paper.Social - DevOps Engineer Assessment
 
-**Paper.Social** is a modern, resilient social media platform deployed using a multi-cloud strategy with automated DevOps pipelines. This project demonstrates Infrastructure as Code (IaC), configuration management, containerization, CI/CD automation, and scalable deployment practices across AWS (and optionally IBM Cloud).
+This project demonstrates Infrastructure as Code (IaC), configuration management, containerization, CI/CD automation, and scalable deployment practices across AWS.
 
 ---
 
 ## 🌐 Project Goals
 
-- Deploy a simple web application on AWS (and IBM Cloud) using Infrastructure as Code
+- Deploy a simple web application on AWS using Infrastructure as Code
 - Use Terraform, Ansible, and GitHub Actions for automation
 - Host a Dockerized frontend application
 - Enable automated builds and deployment via CI/CD pipeline
@@ -35,7 +35,7 @@ Terraform is used to provision infrastructure in AWS:
 
 - One EC2 instance (Amazon Linux 2)
 - Security Group allowing SSH (22) and HTTP (80)
-- Key pair for SSH access
+- Key pair for SSH access (already created in EC2 dashboard)
 
 ### Setup Steps
 
@@ -50,6 +50,7 @@ Output:
 - EC2 instance public IP
 - SSH key (used in Ansible and GitHub Secrets)
 
+Note- We can also use Terraform userdata feature to install services without Ansible.
 ---
 
 ## ⚖️ Server Configuration (Ansible)
@@ -91,6 +92,7 @@ on:
       - '**/styles.css'
       - '**/Dockerfile'
 ```
+Note- In this case terraform and Ansible Script is also present in the same git repo, hence we need to explicitly define the trigger paths.
 
 ### Steps
 
@@ -100,6 +102,8 @@ on:
 - Run the Ansible playbook remotely to build and deploy the Docker image
 
 > `ansible_python_interpreter` is set to `/usr/local/bin/python3.8`
+
+Note- We are running this ansible playbook on Github action runner, There were some version compatibility issues so use the defined versions only
 
 ### Required GitHub Secrets
 
@@ -115,9 +119,6 @@ on:
 
 A simple static HTML + CSS site (`app/`) with the following features:
 
-- Responsive layout
-- Custom branding for Paper.Social
-- Deployed via Nginx container
 
 Dockerfile:
 
@@ -128,32 +129,16 @@ COPY . /usr/share/nginx/html
 
 ---
 
-## 📊 Monitoring & Logging (Optional)
+## 📊 Monitoring & Logging
 
 > Not implemented yet, but here's the plan:
 
-- Use AWS CloudWatch Agent or install Prometheus Node Exporter
-- Run a basic Grafana dashboard for container health
-- Mount logs inside container or export with logging driver
+- install AWS Cloudwatch Agent on EC2 machine
+- create config.json
+- attach this policy to user "CloudWatchAgentServerPolicy"
 
----
+Note- We can also mount /var/lib/docker/containers inside cloudWatch agent config to push all the container logs
 
-## 🛍️ Cost Considerations
-
-- **EC2**: t2.micro used for low-cost development
-- **No autoscaling** implemented (but possible via ASGs)
-- **Storage**: Minimal (\~8 GB)
-- **Monitoring**: Can be done using open-source stack to avoid cost
-
----
-
-## ⚡ Bonus Features (Optional)
-
-- Support for IBM Cloud provisioning (mirror Terraform code)
-- Add domain + SSL (Let's Encrypt)
-- Autoscaling and container health checks
-
----
 
 ## 🔄 Redeployment Flow
 
@@ -171,16 +156,3 @@ COPY . /usr/share/nginx/html
 - Use `force_source: true` in Docker build task to avoid caching issues
 
 ---
-
-## 👍 Author & Credits
-
-Created by: Tushar Yadav\
-GitHub: [ytushar24](https://github.com/ytushar24)
-
----
-
-Ready to scale, secure, and monitor in multi-cloud production environments.
-
----
-
-I want 
