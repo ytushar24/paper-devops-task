@@ -4,7 +4,7 @@ This project demonstrates Infrastructure as Code (IaC), configuration management
 
 ---
 
-## 🌐 Project Goals
+## Project Goals
 
 - Deploy a simple web application on AWS using Infrastructure as Code
 - Use Terraform, Ansible, and GitHub Actions for automation
@@ -14,7 +14,7 @@ This project demonstrates Infrastructure as Code (IaC), configuration management
 
 ---
 
-## ⚖️ Tech Stack
+## Tech Stack
 
 | Layer                 | Tool                              |
 | --------------------- | --------------------------------- |
@@ -23,11 +23,11 @@ This project demonstrates Infrastructure as Code (IaC), configuration management
 | Configuration Mgmt    | Ansible                           |
 | App Containerization  | Docker                            |
 | CI/CD                 | GitHub Actions                    |
-| Monitoring (Optional) | Prometheus + Grafana / CloudWatch |
+| Monitoring (Optional) | CloudWatch                        |
 
 ---
 
-## 🚀 Infrastructure Setup (Terraform)
+## Infrastructure Setup (Terraform)
 
 Terraform is used to provision infrastructure in AWS:
 
@@ -53,7 +53,7 @@ Output:
 Note- We can also use Terraform userdata feature to install services without Ansible.
 ---
 
-## ⚖️ Server Configuration (Ansible)
+## Server Configuration (Ansible)
 
 Ansible automates installation and app deployment to the EC2 instance:
 
@@ -76,7 +76,7 @@ ansible-playbook -i hosts.ini ansible/playbook.yml
 
 ---
 
-## ⚙️ CI/CD Pipeline (GitHub Actions)
+## CI/CD Pipeline (GitHub Actions)
 
 A workflow was created to automate deployment whenever the app files change.
 
@@ -109,13 +109,13 @@ Note- We are running this ansible playbook on Github action runner, There were s
 
 | Secret Name       | Description                   |
 | ----------------- | ----------------------------- |
-| `SSH_PRIVATE_KEY` | EC2 private key (PEM format)  |
+| `SSH_PRIVATE_KEY` | EC2 private key               |
 | `EC2_HOST`        | Public IP of EC2 instance     |
-| `EC2_USER`        | SSH user (usually `ec2-user`) |
+| `EC2_USER`        | SSH user                      |
 
 ---
 
-## 📃 App Overview (Frontend)
+## App Overview (Frontend)
 
 A simple static HTML + CSS site (`app/`) with the following features:
 
@@ -129,7 +129,7 @@ COPY . /usr/share/nginx/html
 
 ---
 
-## 📊 Monitoring & Logging
+## Monitoring & Logging
 
 > Not implemented yet, but here's the plan:
 
@@ -140,7 +140,7 @@ COPY . /usr/share/nginx/html
 Note- We can also mount /var/lib/docker/containers inside cloudWatch agent config to push all the container logs
 
 
-## 🔄 Redeployment Flow
+## Redeployment Flow
 
 1. Push changes to `/app/index.html`, `/styles.css`, or `/Dockerfile`
 2. GitHub Action triggers
@@ -149,7 +149,7 @@ Note- We can also mount /var/lib/docker/containers inside cloudWatch agent confi
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 - Make sure Ansible uses `/usr/local/bin/python3.8`
 - Use `pip` to install Python packages **not yum** (e.g., `requests`)
