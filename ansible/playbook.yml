@@ -3,8 +3,6 @@
   become: true
   vars:
     ansible_python_interpreter: /usr/local/bin/python3.8
-
-  vars:
     repo_url: https://github.com/ytushar24/paper-devops-task.git
     app_dir: /home/ec2-user/paper-devops-task
 
@@ -51,10 +49,10 @@
 
     - name: Build Docker image for Paper.Social
       community.docker.docker_image:
-        name: paper-social               # <— This is the image name
+        name: paper-social
         source: build
         build: 
-          path: /home/ec2-user/paper-devops-task/app
+          path: "{{ app_dir }}/app"
 
     - name: Stop any existing container
       community.docker.docker_container:
