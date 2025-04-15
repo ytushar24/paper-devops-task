@@ -13,7 +13,6 @@
           - docker
           - git
           - python3-pip
-          - requests
         state: present
 
     - name: Start and enable Docker service
@@ -34,7 +33,7 @@
           - docker
           - requests
           - urllib3==1.26.16
-        executable: pip3
+        executable: /usr/local/bin/python3.8 -m pip
 
     - name: Remove old repo if it exists
       file:
