@@ -16,6 +16,7 @@
           - git
           - python3-pip
         state: present
+        use: dnf
 
     - name: Start and enable Docker service
       service:
