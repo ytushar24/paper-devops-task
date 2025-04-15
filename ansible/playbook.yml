@@ -10,7 +10,7 @@
 
   tasks:
     - name: Install required packages
-      yum:
+      package:
         name:
           - docker
           - git
